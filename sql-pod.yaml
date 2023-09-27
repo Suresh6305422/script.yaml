@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: sqlpod
+  label:
+    name: pod-demo
+spec:
+  containers:
+    - image: mysql
+      name: sqlc
+      envFrom:
+        - configMapRef:
+            name: config-demo
+          secretRef:
+            name: secret-demo  
+      volumeMounts:
+        - name: user-demo
+          mountPath: /creds/user 
+        - name: pswrd-demo
+          mountPath: /creds/pswrd   
+  volumes:
+    - name: user-demo
+    - configMap: 
+        name: config-demo 
+    - name: pswrd-demo    
+      secret: 
+        secretName: secret-demo                
